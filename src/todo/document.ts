@@ -6,7 +6,7 @@ import stringMatches from 'string-matches';
 import * as vscode from 'vscode';
 import Consts from '../consts';
 import Utils from '../utils';
-import {Line, Archive, Comment, Formatted, Project, Tag, Todo, TodoBox, TodoFinished, TodoDone, TodoCancelled} from './items';
+import {Line, Archive, Comment, Formatted, Project, Tag, Todo, TodoBox, TodoFinished, TodoVerifying, TodoDone, TodoCancelled} from './items';
 
 /* DOCUMENT */
 
@@ -42,7 +42,7 @@ class Document {
 
   /* GET */
 
-  getItems ( Item: typeof Line | typeof Archive | typeof Comment | typeof Formatted | typeof Project | typeof Tag | typeof Todo | typeof TodoBox | typeof TodoFinished | typeof TodoDone | typeof TodoCancelled, regex: RegExp ) {
+  getItems ( Item: typeof Line | typeof Archive | typeof Comment | typeof Formatted | typeof Project | typeof Tag | typeof Todo | typeof TodoBox | typeof TodoFinished | typeof TodoVerifying | typeof TodoDone | typeof TodoCancelled, regex: RegExp ) {
 
     const matchText = _.isString ( this.text ) ? this.text : this.textDocument.getText (),
           matches = stringMatches ( matchText, regex );
@@ -53,7 +53,7 @@ class Document {
 
   }
 
-  getItemAt ( Item: typeof Line | typeof Archive | typeof Comment | typeof Formatted | typeof Project | typeof Tag | typeof Todo | typeof TodoBox | typeof TodoFinished | typeof TodoDone | typeof TodoCancelled, lineNumber: number, checkValidity = true ) {
+  getItemAt ( Item: typeof Line | typeof Archive | typeof Comment | typeof Formatted | typeof Project | typeof Tag | typeof Todo | typeof TodoBox | typeof TodoFinished | typeof TodoVerifying | typeof TodoDone | typeof TodoCancelled, lineNumber: number, checkValidity = true ) {
 
     const line = this.textDocument.lineAt ( lineNumber );
 
@@ -144,6 +144,18 @@ class Document {
   getTodosBoxStarted () {
 
     return this.getItems ( TodoBox, Consts.regexes.todoBoxStarted );
+
+  }
+
+  getTodosVerifying () {
+
+    return this.getItems ( TodoVerifying, Consts.regexes.todoVerifying );
+
+  }
+
+  getTodoVerifyingAt ( lineNumber: number, checkValidity? ) {
+
+    return this.getItemAt ( TodoVerifying, lineNumber, checkValidity );
 
   }
 

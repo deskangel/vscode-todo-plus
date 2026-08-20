@@ -133,6 +133,11 @@
           "description": "Done todo color",
           "default": "#a6e22e"
         },
+        "todo.colors.verifying": {
+          "type": "string",
+          "description": "Verifying todo color",
+          "default": "#fd971f"
+        },
         "todo.colors.cancelled": {
           "type": "string",
           "description": "Cancelled todo color",
@@ -214,6 +219,9 @@
             "done": {
               "type": "string"
             },
+            "verifying": {
+              "type": "string"
+            },
             "cancelled": {
               "type": "string"
             },
@@ -254,6 +262,9 @@
           "description": "Colors for light themes",
           "properties": {
             "done": {
+              "type": "string"
+            },
+            "verifying": {
               "type": "string"
             },
             "cancelled": {
@@ -600,7 +611,10 @@
         },
         "todo.embedded.view.sort": {
           "type": "string",
-          "enum": ["line", "label"],
+          "enum": [
+            "line",
+            "label"
+          ],
           "description": "Sort todos either by label or by source line number",
           "default": "line"
         },
@@ -643,6 +657,10 @@
       {
         "command": "todo.toggleBox",
         "title": "Todo: Toggle Box"
+      },
+      {
+        "command": "todo.toggleVerifying",
+        "title": "Todo: Toggle Verifying"
       },
       {
         "command": "todo.toggleDone",
@@ -761,6 +779,10 @@
         "title": "Toggle Box"
       },
       {
+        "command": "todo.editorToggleVerifying",
+        "title": "Toggle Verifying"
+      },
+      {
         "command": "todo.editorToggleDone",
         "title": "Toggle Done"
       },
@@ -839,6 +861,10 @@
           "when": "editorLangId == todo"
         },
         {
+          "command": "todo.toggleVerifying",
+          "when": "editorLangId == todo"
+        },
+        {
           "command": "todo.toggleCancelled",
           "when": "editorLangId == todo"
         },
@@ -895,6 +921,10 @@
           "when": "false"
         },
         {
+          "command": "todo.editorToggleVerifying",
+          "when": "false"
+        },
+        {
           "command": "todo.editorToggleDone",
           "when": "false"
         },
@@ -926,23 +956,28 @@
           "when": "editorTextFocus && editorLangId == todo"
         },
         {
-          "command": "todo.editorToggleDone",
+          "command": "todo.editorToggleVerifying",
           "group": "todo@2",
           "when": "editorTextFocus && editorLangId == todo"
         },
         {
-          "command": "todo.editorToggleCancelled",
+          "command": "todo.editorToggleDone",
           "group": "todo@3",
           "when": "editorTextFocus && editorLangId == todo"
         },
         {
-          "command": "todo.editorToggleStart",
+          "command": "todo.editorToggleCancelled",
           "group": "todo@4",
           "when": "editorTextFocus && editorLangId == todo"
         },
         {
-          "command": "todo.editorArchive",
+          "command": "todo.editorToggleStart",
           "group": "todo@5",
+          "when": "editorTextFocus && editorLangId == todo"
+        },
+        {
+          "command": "todo.editorArchive",
+          "group": "todo@6",
           "when": "editorTextFocus && editorLangId == todo"
         }
       ],
@@ -1058,6 +1093,7 @@
     "vscode-beggar": "^1.0.0"
   },
   "devDependencies": {
+    "@vscode/vsce": "^3.9.2",
     "ts-loader": "^5.2.1",
     "typescript": "^2.8.0",
     "vscode": "^1.1.21",

@@ -39,6 +39,7 @@ class Todo extends Item {
 
     const status = {
       box: false,
+      verifying: false,
       done: false,
       cancelled: false,
       other: false
@@ -53,11 +54,12 @@ class Todo extends Item {
   getStatus () {
 
     const box = this.isBox (),
-          done = !box && this.isDone (),
-          cancelled = !box && !done && this.isCancelled (),
-          other = !box && !done && !cancelled;
+          verifying = !box && this.isVerifying (),
+          done = !box && !verifying && this.isDone (),
+          cancelled = !box && !verifying && !done && this.isCancelled (),
+          other = !box && !verifying && !done && !cancelled;
 
-    return { box, done, cancelled, other };
+    return { box, verifying, done, cancelled, other };
 
   }
 
@@ -85,7 +87,25 @@ class Todo extends Item {
 
     }
 
-    if ( ( ( was.box || was.other ) && ( is.done || is.cancelled ) ) || ( was.cancelled && is.done ) || ( was.done && is.cancelled ) ) {
+    if ( ( was.done || was.cancelled ) && is.verifying ) {
+
+      this.unfinish ();
+
+    }
+
+    if ( !was.verifying && is.verifying ) {
+
+      this.verify ();
+
+    }
+
+    if ( was.verifying && !is.verifying ) {
+
+      this.unverify ();
+
+    }
+
+    if ( ( ( was.box || was.other || was.verifying ) && ( is.done || is.cancelled ) ) || ( was.cancelled && is.done ) || ( was.done && is.cancelled ) ) {
 
       this.finish ( is.done );
 
@@ -259,6 +279,18 @@ class Todo extends Item {
 
   }
 
+  verify () {
+
+    this.replaceTag ( Consts.regexes.tagVerifying, '@verifying' );
+
+  }
+
+  unverify () {
+
+    this.removeTag ( Consts.regexes.tagVerifying );
+
+  }
+
   /* SYMBOLS */
 
   setSymbol ( symbol: string ) {
@@ -314,6 +346,15 @@ class Todo extends Item {
 
   }
 
+  toggleVerifying ( force: boolean = !this.isVerifying () ) {
+
+    const symbol = Consts.symbols.box,
+          state = force ? 'verifying' : 'box';
+
+    this.setSymbolAndState ( symbol, state );
+
+  }
+
   done () {
 
     this.toggleDone ( true );
@@ -358,6 +399,12 @@ class Todo extends Item {
   isDone () {
 
     return Item.is ( this.text, Consts.regexes.todoDone );
+
+  }
+
+  isVerifying () {
+
+    return Item.is ( this.text, Consts.regexes.todoVerifying );
 
   }
 

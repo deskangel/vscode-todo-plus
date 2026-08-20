@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as vscode from 'vscode';
 import Config from '../config';
 import Consts from '../consts';
-import {Comment, Project, Tag, TodoBox, TodoDone, TodoCancelled} from '../todo/items';
+import {Comment, Project, Tag, TodoBox, TodoVerifying, TodoDone, TodoCancelled} from '../todo/items';
 import AST from './ast';
 import Tokens from './statistics_tokens';
 import Time from './time';
@@ -175,6 +175,7 @@ const Statistics = {
         projects: items.projects.length,
         tags: items.tags.length,
         pending: items.todosBox.length,
+        verifying: items.todosVerifying.length,
         done: items.todosDone.length,
         cancelled: items.todosCancelled.length
       });
@@ -209,7 +210,7 @@ const Statistics = {
 
       }
 
-      const groups = [items.projects, items.todosBox, items.todosDone, items.todosCancelled, items.tags],
+      const groups = [items.projects, items.todosBox, items.todosVerifying, items.todosDone, items.todosCancelled, items.tags],
             lines = groups.reduce ( ( arr1, arr2 ) => mergeSorted ( arr1, arr2 ) );
 
       items.projects.forEach ( project => {
@@ -254,6 +255,7 @@ const Statistics = {
             tokens.projects += 1 + nextTokens.projects;
             tokens.tags += nextTokens.tags;
             tokens.pending += nextTokens.pending;
+            tokens.verifying += nextTokens.verifying;
             tokens.done += nextTokens.done;
             tokens.cancelled += nextTokens.cancelled;
             tokens.estSeconds += nextTokens.estSeconds;
@@ -261,7 +263,7 @@ const Statistics = {
             tokens.lastedSeconds += nextTokens.lastedSeconds;
             tokens.wastedSeconds += nextTokens.wastedSeconds;
 
-            i += nextTokens.comments + nextTokens.projects + nextTokens.tags + nextTokens.pending + nextTokens.done + nextTokens.cancelled; // Jumping
+            i += nextTokens.comments + nextTokens.projects + nextTokens.tags + nextTokens.pending + nextTokens.verifying + nextTokens.done + nextTokens.cancelled; // Jumping
 
           } if ( nextItem instanceof Comment ) {
 
@@ -270,6 +272,10 @@ const Statistics = {
           } else if ( nextItem instanceof TodoBox ) {
 
             tokens.pending++;
+
+          } else if ( nextItem instanceof TodoVerifying ) {
+
+            tokens.verifying++;
 
           } else if ( nextItem instanceof TodoDone ) {
 
