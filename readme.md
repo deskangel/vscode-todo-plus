@@ -58,7 +58,7 @@ It adds 6 shortcuts when editing a `Todo` file:
 
 ```js
 'Cmd/Ctrl+Enter' // Triggers `Todo: Toggle Box`
-'Alt+Enter' // Triggers `Todo: Toggle Box`
+'Alt+Enter' // Triggers `Todo: Toggle Done`
 'Alt+D' // Triggers `Todo: Toggle Done`
 'Alt+C' // Triggers `Todo: Toggle Cancelled`
 'Alt+S' // Triggers `Todo: Toggle Start`
