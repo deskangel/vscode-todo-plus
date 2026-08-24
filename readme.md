@@ -21,10 +21,11 @@ Manage todo lists with ease. Powerful, easy to use and customizable. [View the d
 - **Go To Symbol**: you can easily move between projects by using the `Go to Symbol in File...` command
 - **[TaskPaper](https://www.taskpaper.com) compatible**: just set `todo.symbols.box`, `todo.symbols.done` and `todo.symbols.cancelled` to `-`
 - **Timekeeping**: you can mark todos as started and track elapsed time until completion
+- **Autosave**: commands save the todo file after they run
 - **Timer**: a timer can be displayed in the statusbar for started todos
 - **Time estimates**: you can estimate the time it will take to complete a todo by adding a tag to it that looks like this: `@est(3 hours)`, `@est(2h30m)` or `@2h30m`. Then you can use the `[est]`, `[est-total]`, `[est-finished]` and `[est-finished-percentage]` tokens in statistics
 - **Statistics**: statistics about your entire file and/or project-level statistics about your individual projects
-- **Embedded todos**: it's common to have `//TODO` or `//FIXME` comments in our code, this extension can find those as well
+- **Embedded todos**: it's common to have `//TODO` or `//FIXME` comments in our code, this extension can find those as well, and this feature can be disabled
 - **Activity bar views**: you can view your todo file and your embedded todos from a custom activity bar section
 
 ## Install
@@ -54,12 +55,13 @@ It adds 12 commands to the command palette:
 'Todo: Embedded View - Toggle View All Files' // Toggle between viewing all files or only the current one
 ```
 
-It adds 6 shortcuts when editing a `Todo` file:
+It adds 7 shortcuts when editing a `Todo` file:
 
 ```js
 'Cmd/Ctrl+Enter' // Triggers `Todo: Toggle Box`
 'Alt+Enter' // Triggers `Todo: Toggle Done`
 'Alt+D' // Triggers `Todo: Toggle Done`
+'Shift+Alt+Enter' // Triggers `Todo: Toggle Verifying`
 'Alt+C' // Triggers `Todo: Toggle Cancelled`
 'Alt+S' // Triggers `Todo: Toggle Start`
 'Cmd/Ctrl+Shift+A' // Triggers  `Todo: Archive`
@@ -79,6 +81,7 @@ It adds 6 shortcuts when editing a `Todo` file:
   "todo.symbols.done": "✔", // Done symbol
   "todo.symbols.cancelled": "✘", // Cancelled symbol
   "todo.colors.done": "#a6e22e", // Done todo color
+  "todo.colors.started": "#ff80d5", // Started todo color
   "todo.colors.verifying": "#fd971f", // Verifying todo color
   "todo.colors.cancelled": "#f92672", // Cancelled todo color
   "todo.colors.code": "#fd971f", // Code color
@@ -125,6 +128,7 @@ It adds 6 shortcuts when editing a `Todo` file:
   "todo.statistics.statusbar.priority": -1, // The priority of this item. Higher value means the item should be shown more to the left
   "todo.statistics.statusbar.text": "$(check) [finished]/[all] ([percentage]%)", // Template used for rendering the text
   "todo.statistics.statusbar.tooltip": "[pending] Pending - [done] Done - [cancelled] Cancelled", // Template used for rendering the tooltip
+  "todo.embedded.enabled": true, // Enable embedded todos
   "todo.embedded.regex": "(?:<!-- *)?(?:#|// @|//|/\\*+|<!--|--|\\* @|\\{!|\\{\\{!--|\\{\\{!) *(TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE)(?:\\s*\\([^)]+\\))?:?(?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|\\{!|\\{\\{!--|\\{\\{!))|((?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|\\{!|\\{\\{!--|\\{\\{!))|(?: +[^@\\n]+)?))", // Regex used for finding embedded todos, requires double escaping
   "todo.embedded.regexFlags": "gi", // Regex flags to use
   "todo.embedded.include": ["**/*"], // Globs to use for including files

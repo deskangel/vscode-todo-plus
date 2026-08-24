@@ -38,9 +38,12 @@ const activate = function ( context: vscode.ExtensionContext ) {
 
   Config.check ( config );
 
+  const isEmbeddedEnabled = config.embedded.enabled !== false;
+
   ViewEmbedded.expanded = config.embedded.view.expanded;
 
-  vscode.commands.executeCommand ( 'setContext', 'todo-embedded-expanded', ViewEmbedded.expanded );
+  vscode.commands.executeCommand ( 'setContext', 'todo-embedded-enabled', isEmbeddedEnabled );
+  vscode.commands.executeCommand ( 'setContext', 'todo-embedded-expanded', isEmbeddedEnabled && ViewEmbedded.expanded );
   vscode.commands.executeCommand ( 'setContext', 'todo-embedded-filtered', !!ViewEmbedded.filter );
 
   ViewEmbedded.all = true;
@@ -64,6 +67,7 @@ const activate = function ( context: vscode.ExtensionContext ) {
     vscode.window.onDidChangeActiveTextEditor ( () => DocumentDecorator.update () ),
     vscode.workspace.onDidChangeConfiguration ( Consts.update ),
     vscode.workspace.onDidChangeConfiguration ( () => delete Utils.files.filesData && Utils.embedded.provider && delete Utils.embedded.provider.filesData ),
+    vscode.workspace.onDidChangeConfiguration ( () => vscode.commands.executeCommand ( 'setContext', 'todo-embedded-enabled', Config.getKey ( 'embedded.enabled' ) !== false ) ),
     vscode.workspace.onDidChangeConfiguration ( () => DocumentDecorator.update () ),
     vscode.workspace.onDidChangeConfiguration ( Utils.statistics.tokens.updateDisabledAll ),
     vscode.workspace.onDidChangeTextDocument ( ChangesDecorator.onChanges ),

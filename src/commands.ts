@@ -118,6 +118,8 @@ async function open ( filePath?: string, lineNumber?: number ) {
 
 async function openEmbedded () {
 
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
+
   await Utils.embedded.initProvider ();
 
   const config = Config.get (),
@@ -236,18 +238,22 @@ function viewFilesExpand () {
 /* VIEW EMBEDDED */
 
 function viewEmbeddedCollapse () {
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
   ViewEmbedded.expanded = false;
   vscode.commands.executeCommand ( 'setContext', 'todo-embedded-expanded', false );
   ViewEmbedded.refresh ( true );
 }
 
 function viewEmbeddedExpand () {
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
   ViewEmbedded.expanded = true;
   vscode.commands.executeCommand ( 'setContext', 'todo-embedded-expanded', true );
   ViewEmbedded.refresh ( true );
 }
 
 async function viewEmbeddedFilter () {
+
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
 
   const filter = await vscode.window.showInputBox ({ placeHolder: 'Filter string...' });
 
@@ -262,6 +268,7 @@ async function viewEmbeddedFilter () {
 const embeddedFilter = viewEmbeddedFilter;
 
 function viewEmbeddedClearFilter () {
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
   ViewEmbedded.filter = false;
   vscode.commands.executeCommand ( 'setContext', 'todo-embedded-filtered', false );
   ViewEmbedded.refresh ();
@@ -270,6 +277,7 @@ function viewEmbeddedClearFilter () {
 const embeddedClearFilter = viewEmbeddedClearFilter;
 
 function viewEmbeddedToggleAllFiles ( force: boolean = !ViewEmbedded.all ) {
+  if ( Config.getKey ( 'embedded.enabled' ) === false ) return;
   ViewEmbedded.all = force;
   vscode.commands.executeCommand ( 'setContext', 'todo-embedded-all', force );
   ViewEmbedded.refresh ();

@@ -3,7 +3,7 @@
   "displayName": "Todo+",
   "description": "Manage todo lists with ease. Powerful, easy to use and customizable.",
   "icon": "resources/logo/logo-128x128.png",
-  "version": "4.19.3",
+  "version": "4.19.4",
   "license": "MIT",
   "main": "out/extension.js",
   "publisher": "fabiospampinato",
@@ -133,6 +133,11 @@
           "description": "Done todo color",
           "default": "#a6e22e"
         },
+        "todo.colors.started": {
+          "type": "string",
+          "description": "Started todo color",
+          "default": "#ff80d5"
+        },
         "todo.colors.verifying": {
           "type": "string",
           "description": "Verifying todo color",
@@ -219,6 +224,9 @@
             "done": {
               "type": "string"
             },
+            "started": {
+              "type": "string"
+            },
             "verifying": {
               "type": "string"
             },
@@ -262,6 +270,9 @@
           "description": "Colors for light themes",
           "properties": {
             "done": {
+              "type": "string"
+            },
+            "started": {
               "type": "string"
             },
             "verifying": {
@@ -505,6 +516,11 @@
           "type": "string",
           "description": "Template used for rendering the tooltip",
           "default": "[pending] Pending - [done] Done - [cancelled] Cancelled"
+        },
+        "todo.embedded.enabled": {
+          "type": "boolean",
+          "description": "Enable embedded todos",
+          "default": true
         },
         "todo.embedded.regex": {
           "type": "string",
@@ -846,7 +862,8 @@
         },
         {
           "id": "todo.views.2embedded",
-          "name": "Embedded"
+          "name": "Embedded",
+          "when": "config.todo.embedded.enabled"
         }
       ]
     },
@@ -861,6 +878,10 @@
     },
     "menus": {
       "commandPalette": [
+        {
+          "command": "todo.openEmbedded",
+          "when": "config.todo.embedded.enabled"
+        },
         {
           "command": "todo.toggleBox",
           "when": "editorLangId == todo"
@@ -947,11 +968,11 @@
         },
         {
           "command": "todo.embeddedFilter",
-          "when": "todo-embedded-filtered == false"
+          "when": "todo-embedded-enabled == true && todo-embedded-filtered == false"
         },
         {
           "command": "todo.embeddedClearFilter",
-          "when": "todo-embedded-filtered == true"
+          "when": "todo-embedded-enabled == true && todo-embedded-filtered == true"
         }
       ],
       "editor/context": [
@@ -1004,32 +1025,32 @@
         },
         {
           "command": "todo.viewEmbeddedCollapse",
-          "when": "view == todo.views.2embedded && todo-embedded-expanded == true",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-expanded == true",
           "group": "navigation@3"
         },
         {
           "command": "todo.viewEmbeddedExpand",
-          "when": "view == todo.views.2embedded && todo-embedded-expanded == false",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-expanded == false",
           "group": "navigation@3"
         },
         {
           "command": "todo.viewEmbeddedFilter",
-          "when": "view == todo.views.2embedded && todo-embedded-filtered == false",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-filtered == false",
           "group": "navigation@2"
         },
         {
           "command": "todo.viewEmbeddedClearFilter",
-          "when": "view == todo.views.2embedded && todo-embedded-filtered == true",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-filtered == true",
           "group": "navigation@2"
         },
         {
           "command": "todo.viewEmbeddedShowAllFiles",
-          "when": "view == todo.views.2embedded && todo-embedded-all == false",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-all == false",
           "group": "navigation@1"
         },
         {
           "command": "todo.viewEmbeddedShowActiveFile",
-          "when": "view == todo.views.2embedded && todo-embedded-all == true",
+          "when": "view == todo.views.2embedded && todo-embedded-enabled == true && todo-embedded-all == true",
           "group": "navigation@1"
         }
       ],

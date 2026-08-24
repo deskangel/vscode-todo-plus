@@ -11,10 +11,11 @@ import Tag from './tag';
 import Todo from './todo';
 import TodoBox from './todo_box';
 import TodoFinished from './todo_finished';
+import TodoStarted from './todo_started';
 import TodoVerifying from './todo_verifying';
 import TodoDone from './todo_done';
 import TodoCancelled from './todo_cancelled';
 
 /* EXPORT */
 
-export {Archive, Comment, Formatted, Item, Line, Project, Tag, Todo, TodoBox, TodoFinished, TodoVerifying, TodoDone, TodoCancelled};
+export {Archive, Comment, Formatted, Item, Line, Project, Tag, Todo, TodoBox, TodoFinished, TodoStarted, TodoVerifying, TodoDone, TodoCancelled};

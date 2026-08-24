@@ -11,6 +11,7 @@ import Comment from './comment';
 import Formatted from './formatted';
 import Project from './project';
 import Tag from './tag';
+import TodoStarted from './todo_started';
 import TodoVerifying from './todo_verifying';
 import TodoDone from './todo_done';
 import TodoCancelled from './todo_cancelled';
@@ -166,6 +167,7 @@ const Document = {
       projects: doc.getProjects (),
       tags: doc.getTags (),
       todosBox: doc.getTodosBox (),
+      todosStarted: doc.getTodosBoxStarted (),
       todosVerifying: doc.getTodosVerifying (),
       todosDone: doc.getTodosDone (),
       todosCancelled: doc.getTodosCancelled ()
@@ -179,6 +181,7 @@ const Document = {
       new Comment ().getDecorations ( items.comments ),
       new Formatted ().getDecorations ( items.formatted ),
       new Tag ().getDecorations ( items.tags ),
+      new TodoStarted ().getDecorations ( items.todosStarted ),
       new TodoVerifying ().getDecorations ( items.todosVerifying ),
       new Project ().getDecorations ( items.projects ),
       new TodoDone ().getDecorations ( items.todosDone ),

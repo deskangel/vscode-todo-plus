@@ -47,6 +47,8 @@ class Embedded extends View {
 
   async getEmbedded () {
 
+    if ( this.config.embedded.enabled === false ) return {};
+
     await Utils.embedded.initProvider ();
 
     return await Utils.embedded.provider.get ( undefined, this.config.embedded.view.groupByRoot, this.config.embedded.view.groupByType, this.config.embedded.view.groupByFile, this.filter, !this.all );
@@ -54,6 +56,8 @@ class Embedded extends View {
   }
 
   async getChildren ( item?: Item ): Promise<Item[]> {
+
+    if ( this.config.embedded.enabled === false ) return [];
 
     if ( this.clear ) {
 

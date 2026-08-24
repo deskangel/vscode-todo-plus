@@ -15,11 +15,27 @@ const Init = {
 
     const {commands} = vscode.extensions.getExtension ( 'fabiospampinato.vscode-todo-plus' ).packageJSON.contributes;
 
+    async function saveEditor ( textEditor?: vscode.TextEditor ) {
+      if ( !textEditor || !textEditor.document.isDirty || textEditor.document.isUntitled ) return;
+      await textEditor.document.save ();
+    }
+
     commands.forEach ( ({ command, title }) => {
 
       const commandName = _.last ( command.split ( '.' ) ) as string,
             handler = Commands[commandName],
-            disposable = vscode.commands.registerCommand ( command, handler );
+            disposable = vscode.commands.registerCommand ( command, async ( ...args ) => {
+
+              const prevTextEditor = vscode.window.activeTextEditor,
+                    result = await handler ( ...args ),
+                    nextTextEditor = vscode.window.activeTextEditor;
+
+              await saveEditor ( prevTextEditor );
+              if ( nextTextEditor !== prevTextEditor ) await saveEditor ( nextTextEditor );
+
+              return result;
+
+            });
 
       context.subscriptions.push ( disposable );
 
@@ -43,12 +59,12 @@ const Init = {
 
   views () {
 
-    Views.forEach ( View => {
+    Views ().forEach ( View => {
       vscode.window.registerTreeDataProvider ( View.id, View );
     });
 
     vscode.workspace.onDidChangeConfiguration ( () => {
-      Views.forEach ( View => View.refresh () );
+      Views ().forEach ( View => View.refresh () );
     });
 
   }
