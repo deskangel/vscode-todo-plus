@@ -30,6 +30,8 @@ const Init = {
                     result = await handler ( ...args ),
                     nextTextEditor = vscode.window.activeTextEditor;
 
+              if ( commandName === 'copyText' ) return result;
+
               await saveEditor ( prevTextEditor );
               if ( nextTextEditor !== prevTextEditor ) await saveEditor ( nextTextEditor );
 

@@ -192,6 +192,44 @@ function archive () {
 
 }
 
+/* COPY */
+
+function stripTextAfterTag ( text: string ): string {
+
+  return text.split ( /(\r\n|\r|\n)/ ).map ( part => {
+    if ( part === '\r\n' || part === '\r' || part === '\n' ) return part;
+    return _.trimEnd ( part.split ( Consts.symbols.tag )[0] );
+  }).join ( '' );
+
+}
+
+async function copyText ( item?: ItemTodo ) {
+
+  const textEditor = vscode.window.activeTextEditor;
+
+  let text = '';
+
+  if ( item && item.label ) {
+
+    text = _.isString ( item.label ) ? item.label : item.label.label;
+
+  } else if ( textEditor && textEditor.document.languageId === Consts.languageId ) {
+
+    const eol = textEditor.document.eol === vscode.EndOfLine.CRLF ? '\r\n' : '\n';
+
+    text = textEditor.selections.map ( selection => {
+      if ( !selection.isEmpty ) return textEditor.document.getText ( selection );
+      return textEditor.document.lineAt ( selection.start.line ).text;
+    }).join ( eol );
+
+  }
+
+  if ( !text ) return vscode.commands.executeCommand ( 'editor.action.clipboardCopyAction' );
+
+  await vscode.env.clipboard.writeText ( stripTextAfterTag ( text ) );
+
+}
+
 /* VIEW */
 
 function viewOpenFile ( file: ItemFile ) {
@@ -297,5 +335,5 @@ function viewEmbeddedShowActiveFile () {
 
 /* EXPORT */
 
-export {open, openEmbedded, toggleBox, toggleVerifying, toggleDone, toggleCancelled, toggleStart, toggleTimer, archive, viewOpenFile, viewRevealTodo, viewFilesOpen, viewFilesCollapse, viewFilesExpand, viewEmbeddedCollapse, viewEmbeddedExpand, viewEmbeddedFilter, embeddedFilter, viewEmbeddedClearFilter, embeddedClearFilter, viewEmbeddedToggleAllFiles, viewEmbeddedShowAllFiles, viewEmbeddedShowActiveFile};
+export {open, openEmbedded, toggleBox, toggleVerifying, toggleDone, toggleCancelled, toggleStart, toggleTimer, archive, copyText, viewOpenFile, viewRevealTodo, viewFilesOpen, viewFilesCollapse, viewFilesExpand, viewEmbeddedCollapse, viewEmbeddedExpand, viewEmbeddedFilter, embeddedFilter, viewEmbeddedClearFilter, embeddedClearFilter, viewEmbeddedToggleAllFiles, viewEmbeddedShowAllFiles, viewEmbeddedShowActiveFile};
 export {toggleBox as editorToggleBox, toggleVerifying as editorToggleVerifying, toggleDone as editorToggleDone, toggleCancelled as editorToggleCancelled, toggleStart as editorToggleStart, archive as editorArchive}

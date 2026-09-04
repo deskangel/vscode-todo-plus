@@ -699,6 +699,10 @@
         "title": "Todo: Archive"
       },
       {
+        "command": "todo.copyText",
+        "title": "Copy"
+      },
+      {
         "command": "todo.embeddedFilter",
         "title": "Todo: Embedded View - Filter"
       },
@@ -852,6 +856,12 @@
         "key": "Shift+Ctrl+a",
         "mac": "Shift+Cmd+a",
         "when": "editorTextFocus && editorLangId == todo"
+      },
+      {
+        "command": "todo.copyText",
+        "key": "Ctrl+c",
+        "mac": "Cmd+c",
+        "when": "editorTextFocus && editorLangId == todo"
       }
     ],
     "views": {
@@ -905,6 +915,10 @@
         {
           "command": "todo.archive",
           "when": "editorLangId == todo"
+        },
+        {
+          "command": "todo.copyText",
+          "when": "false"
         },
         {
           "command": "todo.viewFilesOpen",
@@ -1058,6 +1072,10 @@
         {
           "command": "todo.viewOpenFile",
           "when": "view =~ /todo\\.views/ && viewItem == file"
+        },
+        {
+          "command": "todo.copyText",
+          "when": "view =~ /todo\\.views/ && viewItem == todo"
         }
       ]
     }
