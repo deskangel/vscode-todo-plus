@@ -23,6 +23,7 @@ Manage todo lists with ease. Powerful, easy to use and customizable. [View the d
 - **Timekeeping**: you can mark todos as started and track elapsed time until completion
 - **Autosave**: commands save the todo file after they run
 - **Timer**: a timer can be displayed in the statusbar for started todos
+- **Clean copy**: when copying a todo, tags and everything after the first tag are removed from the copied text
 - **Time estimates**: you can estimate the time it will take to complete a todo by adding a tag to it that looks like this: `@est(3 hours)`, `@est(2h30m)` or `@2h30m`. Then you can use the `[est]`, `[est-total]`, `[est-finished]` and `[est-finished-percentage]` tokens in statistics
 - **Statistics**: statistics about your entire file and/or project-level statistics about your individual projects
 - **Embedded todos**: it's common to have `//TODO` or `//FIXME` comments in our code, this extension can find those as well, and this feature can be disabled
@@ -38,7 +39,7 @@ ext install fabiospampinato.vscode-todo-plus
 
 ## Usage
 
-It adds 12 commands to the command palette:
+It adds 13 commands to the command palette:
 
 ```js
 'Todo: Open' // Open or create your project's todo file
@@ -51,11 +52,12 @@ It adds 12 commands to the command palette:
 'Todo: Toggle Timer' // Toggle the timer
 'Todo: Archive' // Archive finished todos
 'Todo: Embedded View - Filter' // Filter the embedded todos view
+'Copy' // Copy a todo without its tags and the text following them
 'Todo: Embedded View - Clear Filter' // Clear the filter in the embedded todos view
 'Todo: Embedded View - Toggle View All Files' // Toggle between viewing all files or only the current one
 ```
 
-It adds 7 shortcuts when editing a `Todo` file:
+It adds 8 shortcuts when editing a `Todo` file:
 
 ```js
 'Cmd/Ctrl+Enter' // Triggers `Todo: Toggle Box`
@@ -65,6 +67,7 @@ It adds 7 shortcuts when editing a `Todo` file:
 'Alt+C' // Triggers `Todo: Toggle Cancelled`
 'Alt+S' // Triggers `Todo: Toggle Start`
 'Cmd/Ctrl+Shift+A' // Triggers  `Todo: Archive`
+'Cmd/Ctrl+C' // Copies a todo without its tags and the text following them
 ```
 
 ## Settings
