@@ -30,7 +30,7 @@ class StatisticsTokens {
 
   @memoize
   get all () {
-    return this.pending + this.verifying + this.finished;
+    return this.pending + this.finished;
   }
 
   @memoize

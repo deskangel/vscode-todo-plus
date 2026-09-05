@@ -4,7 +4,7 @@
 import * as _ from 'lodash';
 import * as vscode from 'vscode';
 import * as moment from 'moment';
-import {Comment, Project, Todo, TodoBox} from '../todo/items';
+import {Comment, Project, Todo, TodoBox, TodoVerifying} from '../todo/items';
 import Document from '../todo/document';
 import Config from '../config';
 import Consts from '../consts';
@@ -185,7 +185,7 @@ const Archive = {
 
           if ( startLevel === level ) return false;
 
-          if ( TodoBox.is ( line.text ) ) return isEmpty = false;
+          if ( TodoBox.is ( line.text ) || TodoVerifying.is ( line.text ) ) return isEmpty = false;
 
           lines.push ( line );
 

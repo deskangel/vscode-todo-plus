@@ -174,7 +174,7 @@ const Statistics = {
         comments: items.comments.length,
         projects: items.projects.length,
         tags: items.tags.length,
-        pending: items.todosBox.length,
+        pending: items.todosBox.length + items.todosVerifying.length,
         verifying: items.todosVerifying.length,
         done: items.todosDone.length,
         cancelled: items.todosCancelled.length
@@ -245,7 +245,7 @@ const Statistics = {
 
           if ( nextItem.level <= project.level ) break;
 
-          wasPending = nextItem instanceof TodoBox;
+          wasPending = nextItem instanceof TodoBox || nextItem instanceof TodoVerifying;
 
           if ( nextItem instanceof Project ) {
 
@@ -263,7 +263,7 @@ const Statistics = {
             tokens.lastedSeconds += nextTokens.lastedSeconds;
             tokens.wastedSeconds += nextTokens.wastedSeconds;
 
-            i += nextTokens.comments + nextTokens.projects + nextTokens.tags + nextTokens.pending + nextTokens.verifying + nextTokens.done + nextTokens.cancelled; // Jumping
+            i += nextTokens.comments + nextTokens.projects + nextTokens.tags + nextTokens.pending + nextTokens.done + nextTokens.cancelled; // Jumping
 
           } if ( nextItem instanceof Comment ) {
 
@@ -275,6 +275,7 @@ const Statistics = {
 
           } else if ( nextItem instanceof TodoVerifying ) {
 
+            tokens.pending++;
             tokens.verifying++;
 
           } else if ( nextItem instanceof TodoDone ) {
