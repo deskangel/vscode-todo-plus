@@ -19,6 +19,7 @@ import ViewFiles from './views/files';
 const callTodosMethodOptions = {
   checkValidity: false,
   filter: _.identity,
+  skipEmptyLines: true,
   method: undefined,
   args: [],
   errors: {
@@ -38,9 +39,10 @@ async function callTodosMethod ( options? ) {
   if ( !doc.isSupported () ) return;
 
   const lines = _.uniq ( _.flatten ( textEditor.selections.map ( selection => _.range ( selection.start.line, selection.end.line + 1 ) ) ) ),
-        todos = _.filter ( lines.map ( line => doc.getTodoAt ( line, options.checkValidity ) ) );
+        actionableLines = options.skipEmptyLines ? lines.filter ( line => _.trim ( textEditor.document.lineAt ( line ).text ) ) : lines,
+        todos = _.filter ( actionableLines.map ( line => doc.getTodoAt ( line, options.checkValidity ) ) );
 
-  if ( todos.length !== lines.length ) vscode.window.showErrorMessage ( options.errors.invalid );
+  if ( todos.length !== actionableLines.length ) vscode.window.showErrorMessage ( options.errors.invalid );
 
   if ( !todos.length ) return;
 
@@ -134,7 +136,10 @@ async function openEmbedded () {
 
 function toggleBox () {
 
-  return callTodosMethod ( 'toggleBox' );
+  return callTodosMethod ({
+    method: 'toggleBox',
+    skipEmptyLines: false
+  });
 
 }
 
