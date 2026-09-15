@@ -303,7 +303,7 @@ class Todo extends Item {
 
     this.removePriorityTags ();
 
-    if ( force ) this.addTag ( '@Low' );
+    if ( force ) this.addTag ( '@low' );
 
   }
 
@@ -311,7 +311,7 @@ class Todo extends Item {
 
     this.removePriorityTags ();
 
-    if ( force ) this.addTag ( '@High' );
+    if ( force ) this.addTag ( '@high' );
 
   }
 
