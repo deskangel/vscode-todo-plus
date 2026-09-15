@@ -175,6 +175,18 @@ function toggleStart () {
 
 }
 
+function toggleLow () {
+
+  return callTodosMethod ( 'toggleLow' );
+
+}
+
+function toggleHigh () {
+
+  return callTodosMethod ( 'toggleHigh' );
+
+}
+
 function toggleTimer () {
 
   Consts.timer = !Consts.timer;
@@ -340,5 +352,5 @@ function viewEmbeddedShowActiveFile () {
 
 /* EXPORT */
 
-export {open, openEmbedded, toggleBox, toggleVerifying, toggleDone, toggleCancelled, toggleStart, toggleTimer, archive, copyText, viewOpenFile, viewRevealTodo, viewFilesOpen, viewFilesCollapse, viewFilesExpand, viewEmbeddedCollapse, viewEmbeddedExpand, viewEmbeddedFilter, embeddedFilter, viewEmbeddedClearFilter, embeddedClearFilter, viewEmbeddedToggleAllFiles, viewEmbeddedShowAllFiles, viewEmbeddedShowActiveFile};
-export {toggleBox as editorToggleBox, toggleVerifying as editorToggleVerifying, toggleDone as editorToggleDone, toggleCancelled as editorToggleCancelled, toggleStart as editorToggleStart, archive as editorArchive}
+export {open, openEmbedded, toggleBox, toggleVerifying, toggleDone, toggleCancelled, toggleStart, toggleLow, toggleHigh, toggleTimer, archive, copyText, viewOpenFile, viewRevealTodo, viewFilesOpen, viewFilesCollapse, viewFilesExpand, viewEmbeddedCollapse, viewEmbeddedExpand, viewEmbeddedFilter, embeddedFilter, viewEmbeddedClearFilter, embeddedClearFilter, viewEmbeddedToggleAllFiles, viewEmbeddedShowAllFiles, viewEmbeddedShowActiveFile};
+export {toggleBox as editorToggleBox, toggleVerifying as editorToggleVerifying, toggleDone as editorToggleDone, toggleCancelled as editorToggleCancelled, toggleStart as editorToggleStart, toggleLow as editorToggleLow, toggleHigh as editorToggleHigh, archive as editorArchive}

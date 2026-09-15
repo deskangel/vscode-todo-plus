@@ -3,7 +3,7 @@
   "displayName": "Todo+",
   "description": "Manage todo lists with ease. Powerful, easy to use and customizable.",
   "icon": "resources/logo/logo-128x128.png",
-  "version": "4.19.8",
+  "version": "4.19.9",
   "license": "MIT",
   "main": "out/extension.js",
   "publisher": "fabiospampinato",
@@ -691,6 +691,14 @@
         "title": "Todo: Toggle Start"
       },
       {
+        "command": "todo.toggleLow",
+        "title": "Todo: Toggle Low"
+      },
+      {
+        "command": "todo.toggleHigh",
+        "title": "Todo: Toggle High"
+      },
+      {
         "command": "todo.toggleTimer",
         "title": "Todo: Toggle Timer"
       },
@@ -815,6 +823,14 @@
         "title": "Toggle Start"
       },
       {
+        "command": "todo.editorToggleLow",
+        "title": "Toggle Low"
+      },
+      {
+        "command": "todo.editorToggleHigh",
+        "title": "Toggle High"
+      },
+      {
         "command": "todo.editorArchive",
         "title": "Archive"
       }
@@ -913,6 +929,14 @@
           "when": "editorLangId == todo"
         },
         {
+          "command": "todo.toggleLow",
+          "when": "editorLangId == todo"
+        },
+        {
+          "command": "todo.toggleHigh",
+          "when": "editorLangId == todo"
+        },
+        {
           "command": "todo.archive",
           "when": "editorLangId == todo"
         },
@@ -977,6 +1001,14 @@
           "when": "false"
         },
         {
+          "command": "todo.editorToggleLow",
+          "when": "false"
+        },
+        {
+          "command": "todo.editorToggleHigh",
+          "when": "false"
+        },
+        {
           "command": "todo.editorArchive",
           "when": "false"
         },
@@ -1016,8 +1048,18 @@
           "when": "editorTextFocus && editorLangId == todo"
         },
         {
-          "command": "todo.editorArchive",
+          "command": "todo.editorToggleLow",
           "group": "todo@6",
+          "when": "editorTextFocus && editorLangId == todo"
+        },
+        {
+          "command": "todo.editorToggleHigh",
+          "group": "todo@7",
+          "when": "editorTextFocus && editorLangId == todo"
+        },
+        {
+          "command": "todo.editorArchive",
+          "group": "todo@8",
           "when": "editorTextFocus && editorLangId == todo"
         }
       ],

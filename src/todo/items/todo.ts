@@ -291,6 +291,30 @@ class Todo extends Item {
 
   }
 
+  /* PRIORITY */
+
+  removePriorityTags () {
+
+    this.lineNextText = _.trimEnd ( this.lineNextText.replace ( Consts.regexes.tagPriority, '' ) );
+
+  }
+
+  toggleLow ( force: boolean = !this.hasTag ( Consts.regexes.tagPriorityLow ) ) {
+
+    this.removePriorityTags ();
+
+    if ( force ) this.addTag ( '@Low' );
+
+  }
+
+  toggleHigh ( force: boolean = !this.hasTag ( Consts.regexes.tagPriorityHigh ) ) {
+
+    this.removePriorityTags ();
+
+    if ( force ) this.addTag ( '@High' );
+
+  }
+
   /* SYMBOLS */
 
   setSymbol ( symbol: string ) {

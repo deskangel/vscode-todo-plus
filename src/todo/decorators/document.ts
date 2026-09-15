@@ -10,6 +10,7 @@ import DocumentModule from '../document';
 import Comment from './comment';
 import Formatted from './formatted';
 import Project from './project';
+import Priority from './priority';
 import Tag from './tag';
 import TodoStarted from './todo_started';
 import TodoVerifying from './todo_verifying';
@@ -166,6 +167,7 @@ const Document = {
       formatted: Config.getKey ( 'formatting.enabled' ) ? doc.getFormatted () : [],
       projects: doc.getProjects (),
       tags: doc.getTags (),
+      todos: doc.getTodos (),
       todosBox: doc.getTodosBox (),
       todosStarted: doc.getTodosBoxStarted (),
       todosVerifying: doc.getTodosVerifying (),
@@ -181,6 +183,7 @@ const Document = {
       new Comment ().getDecorations ( items.comments ),
       new Formatted ().getDecorations ( items.formatted ),
       new Tag ().getDecorations ( items.tags ),
+      new Priority ().getDecorations ( items.todos ),
       new TodoStarted ().getDecorations ( items.todosStarted ),
       new TodoVerifying ().getDecorations ( items.todosVerifying ),
       new Project ().getDecorations ( items.projects ),
