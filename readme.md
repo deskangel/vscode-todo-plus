@@ -49,6 +49,8 @@ It adds 13 commands to the command palette:
 'Todo: Toggle Done' // Toggle todo's done symbol
 'Todo: Toggle Cancelled' // Toggle todo's cancelled symbol
 'Todo: Toggle Start' // Toggle a todo as started
+'Todo: Toggle Low'
+'Todo: Toggle High'
 'Todo: Toggle Timer' // Toggle the timer
 'Todo: Archive' // Archive finished todos
 'Todo: Embedded View - Filter' // Filter the embedded todos view
